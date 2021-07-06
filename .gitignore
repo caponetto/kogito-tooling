@@ -42,3 +42,12 @@ package-lock.json
 *.vsix
 *.dockerimage
 **/test-resources/
+
+# Eclipse, Netbeans and IntelliJ files
+**/nbproject
+**/*.ipr
+**/*.iws
+**/*.iml
+**/.classpath
+**/.project
+**/.settings
