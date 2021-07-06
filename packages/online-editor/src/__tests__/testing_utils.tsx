@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
+import { EnvelopeMapping } from "@kogito-tooling/editor/dist/api";
 import { EMPTY_FILE_DMN } from "@kogito-tooling/editor/dist/channel";
+import { I18nDictionariesProvider, I18nDictionariesProviderProps } from "@kogito-tooling/i18n/dist/react-components";
 import * as React from "react";
 import { Route, Switch } from "react-router";
 import { HashRouter } from "react-router-dom";
 import { GithubService } from "../common/GithubService";
 import { GlobalContext, GlobalContextType } from "../common/GlobalContext";
-import { Routes } from "../common/Routes";
-import { EnvelopeMapping } from "@kogito-tooling/editor/dist/api";
-import { I18nDictionariesProvider, I18nDictionariesProviderProps } from "@kogito-tooling/i18n/dist/react-components";
 import { OnlineI18n, OnlineI18nContext, onlineI18nDefaults, onlineI18nDictionaries } from "../common/i18n";
-import { NotificationsPanelContextProvider } from "../editor/NotificationsPanel/NotificationsPanelContextProvider";
+import { Routes } from "../common/Routes";
+import { DmnDevSandboxContextProvider } from "../editor/DmnDevSandbox/DmnDevSandboxContextProvider";
 import { DmnRunnerContextProvider } from "../editor/DmnRunner/DmnRunnerContextProvider";
-import { DeployContextProvider } from "../editor/deploy/DeployContextProvider";
+import { NotificationsPanelContextProvider } from "../editor/NotificationsPanel/NotificationsPanelContextProvider";
 
 export function usingTestingGlobalContext(children: React.ReactElement, ctx?: Partial<GlobalContextType>) {
   const envelopeMapping: EnvelopeMapping = {
@@ -106,10 +106,10 @@ export function usingDmnRunnerContext(
   );
 }
 
-export function usingTestingDeployContext(children: React.ReactElement, editor: any, isEditorReady = true) {
+export function usingTestingDmnDevSandboxContext(children: React.ReactElement, editor: any, isEditorReady = true) {
   return (
-    <DeployContextProvider editor={editor} isEditorReady={isEditorReady}>
+    <DmnDevSandboxContextProvider editor={editor} isEditorReady={isEditorReady}>
       {children}
-    </DeployContextProvider>
+    </DmnDevSandboxContextProvider>
   );
 }

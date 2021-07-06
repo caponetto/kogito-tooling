@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { OnlineI18n } from "..";
 import { en as en_common } from "@kogito-tooling/i18n-common-dictionary";
 import { wrapped } from "@kogito-tooling/i18n/dist/core";
+import { OnlineI18n } from "..";
 
 export const en: OnlineI18n = {
   ...en_common,
@@ -83,7 +83,7 @@ export const en: OnlineI18n = {
     share: "Share",
     embed: "Embed",
   },
-  deploy: {
+  dmnDevSandbox: {
     common: {
       deployInstanceInfo: "Deploy instance information",
       disclaimer:

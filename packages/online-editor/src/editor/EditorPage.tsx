@@ -14,33 +14,33 @@
  * limitations under the License.
  */
 
+import { ChannelType } from "@kogito-tooling/editor/dist/api";
+import { EmbeddedEditor, useDirtyState, useEditorRef } from "@kogito-tooling/editor/dist/embedded";
+import { Alert, AlertActionCloseButton, AlertActionLink } from "@patternfly/react-core/dist/js/components/Alert";
+import { Button } from "@patternfly/react-core/dist/js/components/Button";
+import { Drawer, DrawerContent, DrawerContentBody } from "@patternfly/react-core/dist/js/components/Drawer";
+import { Modal } from "@patternfly/react-core/dist/js/components/Modal";
+import { Page, PageSection } from "@patternfly/react-core/dist/js/components/Page";
 import * as React from "react";
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router";
+import { UpdateGistErrors } from "../common/GithubService";
 import { GithubTokenModal } from "../common/GithubTokenModal";
 import { GlobalContext } from "../common/GlobalContext";
-import { FullScreenToolbar } from "./EditorFullScreenToolbar";
-import { EditorToolbar } from "./EditorToolbar";
-import { useDmnTour } from "../tour";
-import { useOnlineI18n } from "../common/i18n";
-import { UpdateGistErrors } from "../common/GithubService";
-import { EmbedModal } from "./EmbedModal";
 import { useFileUrl } from "../common/Hooks";
-import { ChannelType } from "@kogito-tooling/editor/dist/api";
-import { EmbeddedEditor, useDirtyState, useEditorRef } from "@kogito-tooling/editor/dist/embedded";
-import { Drawer, DrawerContent, DrawerContentBody } from "@patternfly/react-core/dist/js/components/Drawer";
-import { DmnRunnerDrawer } from "./DmnRunner/DmnRunnerDrawer";
+import { useOnlineI18n } from "../common/i18n";
+import { useDmnTour } from "../tour";
+import { DmnDevSandboxContextProvider } from "./DmnDevSandbox/DmnDevSandboxContextProvider";
 import { DmnRunnerContext } from "./DmnRunner/DmnRunnerContext";
 import { DmnRunnerContextProvider } from "./DmnRunner/DmnRunnerContextProvider";
-import { NotificationsPanel } from "./NotificationsPanel/NotificationsPanel";
+import { DmnRunnerDrawer } from "./DmnRunner/DmnRunnerDrawer";
 import { DmnRunnerStatus } from "./DmnRunner/DmnRunnerStatus";
-import { NotificationsPanelContextProvider } from "./NotificationsPanel/NotificationsPanelContextProvider";
+import { FullScreenToolbar } from "./EditorFullScreenToolbar";
+import { EditorToolbar } from "./EditorToolbar";
+import { EmbedModal } from "./EmbedModal";
+import { NotificationsPanel } from "./NotificationsPanel/NotificationsPanel";
 import { NotificationsPanelContextType } from "./NotificationsPanel/NotificationsPanelContext";
-import { Alert, AlertActionCloseButton, AlertActionLink } from "@patternfly/react-core/dist/js/components/Alert";
-import { Button } from "@patternfly/react-core/dist/js/components/Button";
-import { Page, PageSection } from "@patternfly/react-core/dist/js/components/Page";
-import { Modal } from "@patternfly/react-core/dist/js/components/Modal";
-import { DeployContextProvider } from "./deploy/DeployContextProvider";
+import { NotificationsPanelContextProvider } from "./NotificationsPanel/NotificationsPanelContextProvider";
 
 const importMonacoEditor = () => import(/* webpackChunkName: "monaco-editor" */ "@kiegroup/monaco-editor");
 
@@ -387,7 +387,7 @@ export function EditorPage(props: Props) {
       <DmnRunnerContextProvider editor={editor} isEditorReady={isEditorReady} closeDmnTour={closeDmnTour}>
         <DmnRunnerContext.Consumer>
           {(dmnRunner) => (
-            <DeployContextProvider editor={editor} isEditorReady={isEditorReady}>
+            <DmnDevSandboxContextProvider editor={editor} isEditorReady={isEditorReady}>
               <Page
                 header={
                   <EditorToolbar
@@ -573,7 +573,7 @@ export function EditorPage(props: Props) {
                 <a ref={downloadRef} />
                 <a ref={downloadPreviewRef} />
               </Page>
-            </DeployContextProvider>
+            </DmnDevSandboxContextProvider>
           )}
         </DmnRunnerContext.Consumer>
       </DmnRunnerContextProvider>
