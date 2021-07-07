@@ -116,6 +116,20 @@ function getDmnRunnerArgs(argv) {
   return [linuxDownloadUrl, macOsDownloadUrl, windowsDownloadUrl, compatibleVersion];
 }
 
+function getDmnDevSandboxArgs(argv) {
+  let baseImageName = argv["DMN_DEV_SANDBOX__baseImageName"] || process.env["DMN_DEV_SANDBOX__baseImageName"];
+  let baseImageTag = argv["DMN_DEV_SANDBOX__baseImageTag"] || process.env["DMN_DEV_SANDBOX__baseImageTag"];
+
+  // TODO CAPONETTO: Update to kietooling account
+  baseImageName = baseImageName ?? "quay.io/caponetto/dmn-dev-sandbox-deployment-base-image";
+  baseImageTag = baseImageTag ?? "latest";
+
+  console.info("DMN Dev Sandbox :: Base Image Name: " + baseImageName);
+  console.info("DMN Dev Sandbox :: Base Image Tag: " + baseImageTag);
+
+  return [baseImageName, baseImageTag];
+}
+
 module.exports = async (env, argv) => {
   const [downloadHub_linuxUrl, downloadHub_macOsUrl, downloadHub_windowsUrl] = getDownloadHubArgs(argv);
   const [
@@ -124,6 +138,7 @@ module.exports = async (env, argv) => {
     dmnRunner_windowsDownloadUrl,
     dmnRunner_compatibleVersion,
   ] = getDmnRunnerArgs(argv);
+  const [dmnDevSandbox_baseImageName, dmnDevSandbox_baseImageTag] = getDmnDevSandboxArgs(argv);
   const gtmResource = getGtmResource(argv);
 
   return merge(common(env, argv), {
@@ -158,6 +173,8 @@ module.exports = async (env, argv) => {
         WEBPACK_REPLACE__dmnRunnerMacOsDownloadUrl: dmnRunner_macOsDownloadUrl,
         WEBPACK_REPLACE__dmnRunnerWindowsDownloadUrl: dmnRunner_windowsDownloadUrl,
         WEBPACK_REPLACE__dmnRunnerCompatibleVersion: dmnRunner_compatibleVersion,
+        WEBPACK_REPLACE__dmnDevSandbox_baseImageName: dmnDevSandbox_baseImageName,
+        WEBPACK_REPLACE__dmnDevSandbox_baseImageTag: dmnDevSandbox_baseImageTag,
       }),
       new CopyPlugin({
         patterns: [
