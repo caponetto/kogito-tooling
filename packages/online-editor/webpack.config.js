@@ -83,7 +83,7 @@ function getDownloadHubArgs(argv) {
   return [linuxUrl, macOsUrl, windowsUrl];
 }
 
-function getDmnRunnerArgs(argv) {
+function getKieToolingExtendedServicesArgs(argv) {
   let linuxDownloadUrl =
     argv["KIE_TOOLING_EXTENDED_SERVICES__linuxDownloadUrl"] ||
     process.env["KIE_TOOLING_EXTENDED_SERVICES__linuxDownloadUrl"];
@@ -133,11 +133,11 @@ function getDmnDevSandboxArgs(argv) {
 module.exports = async (env, argv) => {
   const [downloadHub_linuxUrl, downloadHub_macOsUrl, downloadHub_windowsUrl] = getDownloadHubArgs(argv);
   const [
-    dmnRunner_linuxDownloadUrl,
-    dmnRunner_macOsDownloadUrl,
-    dmnRunner_windowsDownloadUrl,
-    dmnRunner_compatibleVersion,
-  ] = getDmnRunnerArgs(argv);
+    kieToolingExtendedServices_linuxDownloadUrl,
+    kieToolingExtendedServices_macOsDownloadUrl,
+    kieToolingExtendedServices_windowsDownloadUrl,
+    kieToolingExtendedServices_compatibleVersion,
+  ] = getKieToolingExtendedServicesArgs(argv);
   const [dmnDevSandbox_baseImageName, dmnDevSandbox_baseImageTag] = getDmnDevSandboxArgs(argv);
   const gtmResource = getGtmResource(argv);
 
@@ -169,10 +169,10 @@ module.exports = async (env, argv) => {
         WEBPACK_REPLACE__hubLinuxUrl: downloadHub_linuxUrl,
         WEBPACK_REPLACE__hubMacOsUrl: downloadHub_macOsUrl,
         WEBPACK_REPLACE__hubWindowsUrl: downloadHub_windowsUrl,
-        WEBPACK_REPLACE__dmnRunnerLinuxDownloadUrl: dmnRunner_linuxDownloadUrl,
-        WEBPACK_REPLACE__dmnRunnerMacOsDownloadUrl: dmnRunner_macOsDownloadUrl,
-        WEBPACK_REPLACE__dmnRunnerWindowsDownloadUrl: dmnRunner_windowsDownloadUrl,
-        WEBPACK_REPLACE__dmnRunnerCompatibleVersion: dmnRunner_compatibleVersion,
+        WEBPACK_REPLACE__kieToolingExtendedServicesLinuxDownloadUrl: kieToolingExtendedServices_linuxDownloadUrl,
+        WEBPACK_REPLACE__kieToolingExtendedServicesMacOsDownloadUrl: kieToolingExtendedServices_macOsDownloadUrl,
+        WEBPACK_REPLACE__kieToolingExtendedServicesWindowsDownloadUrl: kieToolingExtendedServices_windowsDownloadUrl,
+        WEBPACK_REPLACE__kieToolingExtendedServicesCompatibleVersion: kieToolingExtendedServices_compatibleVersion,
         WEBPACK_REPLACE__dmnDevSandbox_baseImageName: dmnDevSandbox_baseImageName,
         WEBPACK_REPLACE__dmnDevSandbox_baseImageTag: dmnDevSandbox_baseImageTag,
       }),
