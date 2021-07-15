@@ -20,7 +20,10 @@ import { NotificationType } from "@kogito-tooling/notifications/dist/api";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useOnlineI18n } from "../../common/i18n";
-import { useKieToolingExtendedServices } from "../KieToolingExtendedServices/KieToolingExtendedServicesContext";
+import {
+  KieToolingExtendedServicesFeature,
+  useKieToolingExtendedServices,
+} from "../KieToolingExtendedServices/KieToolingExtendedServicesContext";
 import { KieToolingExtendedServicesStatus } from "../KieToolingExtendedServices/KieToolingExtendedServicesStatus";
 import { useNotificationsPanel } from "../NotificationsPanel/NotificationsPanelContext";
 import { DmnRunnerContext } from "./DmnRunnerContext";
@@ -72,7 +75,10 @@ export function DmnRunnerContextProvider(props: Props) {
     }
 
     setStatus(DmnRunnerStatus.AVAILABLE);
-    if (kieToolingExtendedServices.isModalOpen) {
+    if (
+      kieToolingExtendedServices.isModalOpen &&
+      kieToolingExtendedServices.installTriggeredBy === KieToolingExtendedServicesFeature.DMN_RUNNER
+    ) {
       setDrawerExpanded(true);
     }
     // After the detection of the DMN Runner, set the schema for the first time
@@ -80,6 +86,7 @@ export function DmnRunnerContextProvider(props: Props) {
       updateFormSchema();
     }
   }, [
+    kieToolingExtendedServices.installTriggeredBy,
     kieToolingExtendedServices.isModalOpen,
     kieToolingExtendedServices.status,
     props.isEditorReady,
